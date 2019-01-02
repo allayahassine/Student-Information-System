@@ -1,6 +1,7 @@
 package com.hassine.entities;
 
 import com.hassine.enumerations.Gender;
+import com.hassine.enumerations.Nationality;
 import com.hassine.enumerations.StudentStatus;
 
 import javax.persistence.*;
@@ -23,9 +24,17 @@ public class Student implements Serializable {
 
     private int phoneNumber;
     private String email;
+    private boolean createLogin;
+
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length = 100000)
+    private byte[] picture;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    private Nationality nationality;
 
     private int repeatingYears;
     private int controlSessions;
@@ -36,14 +45,17 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(String firstName, String lastName, String nationalIdentityCard, Date dateOfBirth, int phoneNumber, String email, Gender gender, int repeatingYears, int controlSessions, StudentStatus status) {
+    public Student(String firstName, String lastName, String nationalIdentityCard, Date dateOfBirth, int phoneNumber, String email, boolean createLogin, byte[] picture, Gender gender, Nationality nationality, int repeatingYears, int controlSessions, StudentStatus status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nationalIdentityCard = nationalIdentityCard;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.createLogin = createLogin;
+        this.picture = picture;
         this.gender = gender;
+        this.nationality = nationality;
         this.repeatingYears = repeatingYears;
         this.controlSessions = controlSessions;
         this.status = status;
@@ -105,12 +117,36 @@ public class Student implements Serializable {
         this.email = email;
     }
 
+    public boolean isCreateLogin() {
+        return createLogin;
+    }
+
+    public void setCreateLogin(boolean createLogin) {
+        this.createLogin = createLogin;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
     public Gender getGender() {
         return gender;
     }
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Nationality getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(Nationality nationality) {
+        this.nationality = nationality;
     }
 
     public int getRepeatingYears() {
